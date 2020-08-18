@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Add Department{% endblock %}
+{% block content %}
+    <h2>Add Department</h2>
+    <form method="POST" class="col-4">
+        {% csrf_token %}
+        <table>
+            {{ form|crispy }}
+        </table>
+
+        <button class="btn btn-outline-primary mt-2" type="submit">Add</button>
+    </form>
+{% endblock %}
+

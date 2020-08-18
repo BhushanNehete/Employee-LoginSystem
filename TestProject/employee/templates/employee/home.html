@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="alert alert-info">Employee Management
+        <a href="{% url 'add' %}" class="btn btn-primary btn-lg" role="button">Add Employee</a>
+        <a href="{% url 'dept' %}" class="btn btn-primary btn-lg" role="button">Add Department</a></h1>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Department</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for emp in employee %}
+        <tr>
+<!--          <td>{{ emp.id }}</td>-->
+          <td>{{ emp.Employee_Id }}</td>
+          <td>{{ emp.Name }}</td>
+          <td>{{ emp.Email }}</td>
+          <td>{{ emp.department }}</td>
+          <td>
+              <a href="{% url 'update' emp.id %}" class="btn btn-outline-primary" role="button">Update</a>
+              <form action="{% url 'deleteemp' emp.id %}" method="post" class="d-inline">{% csrf_token %}
+                  <input type="submit", class="btn btn-outline-danger", value="Delete">
+              </form>
+
+            </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+{% endblock %}
