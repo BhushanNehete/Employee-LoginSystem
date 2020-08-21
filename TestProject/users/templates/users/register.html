@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Add Employee{% endblock %}
+{% block content %}
+    <h2 class="alert alert-info">Register User</h2>
+        <form method="POST" class="col-4">
+            {% csrf_token %}
+            <table>
+                {{ form|crispy }}
+            </table>
+
+            <button class="btn btn-outline-primary mt-2" type="submit">Sign Up</button>
+        </form>
+
+{% endblock %}
+
