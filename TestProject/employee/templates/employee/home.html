@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1 class="alert alert-info">Employee Management
-        <a href="{% url 'add' %}" class="btn btn-primary btn-md" role="button">Add Employee</a>
-        <a href="{% url 'dept' %}" class="btn btn-primary btn-md" role="button">Add Department</a>
+        {% if perms.employee.add_employee and perms.employee.add_department %}
+            <a href="{% url 'add' %}" class="btn btn-primary btn-md" role="button">Add Employee</a>
+            <a href="{% url 'dept' %}" class="btn btn-primary btn-md" role="button">Add Department</a>
+        {% endif %}
         <div align="right" style="float:right">
-            <a href="{% url 'login' %}" class="btn btn-primary btn-md" role="button">Login</a>
-            <a href="{% url 'register' %}" class="btn btn-primary btn-md" role="button">Register</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="btn btn-primary btn-md" role="button">Profile</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary btn-md" role="button">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary btn-md" role="button">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-primary btn-md" role="button">Register</a>
+            {% endif %}
         </div>
 
     </h1>
@@ -31,11 +38,14 @@
           <td>{{ emp.Email }}</td>
           <td>{{ emp.department }}</td>
           <td>
-              <a href="{% url 'update' emp.id %}" class="btn btn-outline-primary" role="button">Update</a>
-              <form action="{% url 'deleteemp' emp.id %}" method="post" class="d-inline">{% csrf_token %}
-                  <input type="submit", class="btn btn-outline-danger", value="Delete">
-              </form>
-
+              {% if perms.employee.delete_employee and perms.employee.change_employee %}
+                <a href="{% url 'update' emp.id %}" class="btn btn-outline-primary" role="button">Update</a>
+                <form action="{% url 'deleteemp' emp.id %}" method="post" class="d-inline">{% csrf_token %}
+                    <input type="submit", class="btn btn-outline-danger", value="Delete">
+                </form>
+              {% else %}
+                <p>No Permissions</p>
+              {% endif %}
             </td>
         </tr>
       {% endfor %}

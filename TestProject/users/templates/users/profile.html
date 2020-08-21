@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+{% block content %}
+    <h2 class="alert alert-info">{{ request.user.username }}
+        <div align="right" style="float:right">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-md" role="button">Home</a>
+            <a href="{% url 'logout' %}" class="btn btn-primary btn-md" role="button">logout</a>
+        </div>
+    </h2>
+
+    <div class="content-section">
+        <fieldset class="form-group ml-3">
+            <legend class="border-bottom mb-4">Profile Info</legend>
+            <p class="font-weight-bold"><h3>Welcome,
+                {{ request.user.username }}</h3><br>
+                <h5>Email: {{ request.user.email }}<br>
+                First Name: {{ request.user.first_name }}<br>
+                    Last Name: {{ request.user.last_name }}</h5>
+            </p>
+            <a href="{% url 'profileupdate' %}" class="btn btn-primary btn-md" role="button">Update</a>
+
+
+                {% if users != None %}
+                <legend class="border-bottom my-4">All Users</legend>
+                <p class="font-weight-bold mt-4">
+                    {% for user in users %}
+                    <a href="{% url 'userdetail' user.id %}">
+                        {{user.id}} {{ user.username }}
+                    </a><br>
+                    {% endfor %}</p>
+                {% endif %}
+
+
+        </fieldset>
+
+    </div>
+
+
+
+{% endblock %}
+

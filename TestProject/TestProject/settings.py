@@ -29,6 +29,9 @@ ALLOWED_HOSTS = []
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+LOGIN_REDIRECT_URL = 'profile'
+
+LOGIN_URL = 'login'  # we use @login_required() decorator and it want url to redirect page
 
 # Application definition
 
