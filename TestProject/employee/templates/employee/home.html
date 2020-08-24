@@ -7,6 +7,7 @@
         {% endif %}
         <div align="right" style="float:right">
             {% if request.user.is_authenticated %}
+                {{ request.user.username }}
                 <a href="{% url 'profile' %}" class="btn btn-primary btn-md" role="button">Profile</a>
                 <a href="{% url 'logout' %}" class="btn btn-primary btn-md" role="button">Logout</a>
             {% else %}
@@ -22,33 +23,39 @@
     <table class="table">
       <thead class="thead-dark">
         <tr>
+<!--          <th scope="col">Id</th>-->
           <th scope="col">Id</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Department</th>
-          <th scope="col">Actions</th>
+            {% if request.user.is_authenticated %}
+                {% if perms.employee.delete_employee and perms.employee.change_employee %}
+                    <th scope="col">Actions</th>
+                {% endif %}
+            {% endif %}
         </tr>
       </thead>
       <tbody>
       {% for emp in employee %}
         <tr>
-
+<!--          <td>{{ emp.id }}</td>-->
           <td>{{ emp.Employee_Id }}</td>
           <td>{{ emp.Name }}</td>
           <td>{{ emp.Email }}</td>
           <td>{{ emp.department }}</td>
-          <td>
-              {% if perms.employee.delete_employee and perms.employee.change_employee %}
-                <a href="{% url 'update' emp.id %}" class="btn btn-outline-primary" role="button">Update</a>
-                <form action="{% url 'deleteemp' emp.id %}" method="post" class="d-inline">{% csrf_token %}
-                    <input type="submit", class="btn btn-outline-danger", value="Delete">
-                </form>
-              {% else %}
-                <p>No Permissions</p>
-              {% endif %}
-            </td>
+            {% if request.user.is_authenticated %}
+              <td>
+                  {% if perms.employee.delete_employee and perms.employee.change_employee %}
+                        <a href="{% url 'update' emp.id %}" class="btn btn-outline-primary" role="button">Update</a>
+                        <form action="{% url 'delete_emp' emp.id %}" method="post" class="d-inline">{% csrf_token %}
+                            <input type="submit", class="btn btn-outline-danger", value="Delete">
+                        </form>
+    <!--                    <p>No Permissions</p>-->
+                      {% endif %}
+                  {% endif %}
+              </td>
+            {% endfor %}
         </tr>
-      {% endfor %}
       </tbody>
     </table>
 

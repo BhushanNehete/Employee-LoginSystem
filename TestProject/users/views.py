@@ -6,7 +6,7 @@ from .forms import CreateUser, UpdateProfile, UpdateAdminProfile, UpdateUserPerm
 
 
 # Create your views here.
-
+# This function create user register form using CreateUser form. Created by UserCreation Form
 def register(request):
     if request.method == "POST":
         form = CreateUser(request.POST)
@@ -18,7 +18,7 @@ def register(request):
         form = CreateUser()
     return render(request, "users/register.html", {"form": form})
 
-
+# This function get the request user from logged in user. And show the all users list on only admin profile.
 def profile(request):
     if request.user.is_authenticated:
         # user = request.user
@@ -29,7 +29,7 @@ def profile(request):
     else:
         return redirect("login")
 
-
+# This function create update form for logged in guest user and
 @login_required()
 def profile_update(request):
     if request.method == "POST":

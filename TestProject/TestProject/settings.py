@@ -29,7 +29,9 @@ ALLOWED_HOSTS = []
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'home'  # render name after login using class base view login page
+
+LOGOUT_REDIRECT_URL = 'home'  # render name after login using class base view login page
 
 LOGIN_URL = 'login'  # we use @login_required() decorator and it want url to redirect page
 

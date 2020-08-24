@@ -1,6 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.generic import ListView, CreateView
 from .models import Employee
 from .forms import addEmployee, addDepartment
@@ -15,7 +14,7 @@ def home(request):
     return render(request, "employee/home.html", {'employee': employ})
 
 
-# addforms = modelform_factory(Employee, exclude=[])   # shortcut to create ModelForm
+# add forms = modelform_factory(Employee, exclude=[])   # shortcut to create ModelForm
 # This function create form and add the employee to database
 def add(request):
     if request.method == 'POST':
@@ -48,7 +47,7 @@ def update(request, id):
     return render(request, "employee/update.html", {"form": form})
 
 # This function create form and add the department to database
-def adddept(request):
+def add_dept(request):
     if request.method == 'POST':
         form = addDepartment(request.POST)
         if form.is_valid():
